@@ -1,5 +1,5 @@
 // vim:tabstop=4:shiftwidth=4:foldmethod=marker:expandtab:cinoptions=(s,U1,m1
-// Copyright (C) 2005 Dmitry Poplavsky <dima@thekompany.com>
+// Copyright (C) 2009 Dmytro Poplavskiy <dmitry.poplavsky@gmail.com>
 
 #include "xmlrpc/client.h"
 #include "xmlrpc/request.h"
@@ -8,8 +8,9 @@
 #include <qhttp.h>
 #include <qbuffer.h>
 #include <QtNetwork>
+#include <QAuthenticator>
 
-#define XMLRPC_DEBUG
+//#define XMLRPC_DEBUG
 
 namespace  xmlrpc {
 
@@ -78,6 +79,7 @@ Client::~Client()
     // it's necessary to delete QHttp instance before Private instance
     // to be sure Client slots will not be called with already deleted Private data
     delete d->http;
+    qDeleteAll( d->serverResponses );
     delete d;
 }
 
@@ -272,14 +274,17 @@ void Client::requestFinished(int id, bool error)
     if ( error ) {
         //if ( d->serverResponses.count(id) )
 
-        d->serverResponses.take(id);
+        QBuffer *buffer = d->serverResponses.take(id);
+        delete buffer;
+
 
         emit failed(id, -32300, d->http->errorString() );
         return;
     }
 
     if ( d->serverResponses.count(id) ) {
-        QByteArray buf = d->serverResponses.take(id)->buffer();
+        QBuffer *buffer = d->serverResponses.take(id);
+        QByteArray buf = buffer->buffer();
 
         //qDebug() << "xml-rpc server response:\n" << QString(buf);
 
@@ -307,6 +312,7 @@ void Client::requestFinished(int id, bool error)
 #endif
             emit failed(id, -32600, "Server error: Invalid xml-rpc. \nNot conforming to spec.");
         }
+        delete buffer;
 
     }
 	

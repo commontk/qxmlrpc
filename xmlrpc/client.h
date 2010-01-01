@@ -1,5 +1,5 @@
 // vim:tabstop=4:shiftwidth=4:expandtab:cinoptions=(s,U1,m1
-// Copyright (C) 2005 Dmitry Poplavsky <dima@thekompany.com>
+// Copyright (C) 2009 Dmytro Poplavskiy <dmitry.poplavsky@gmail.com>
 
 #ifndef CLIENT_H
 #define CLIENT_H
@@ -8,6 +8,7 @@
 #include <QHttp>
 
 #include "xmlrpc/variant.h"
+class QAuthenticator;
 
 namespace  xmlrpc {
 
