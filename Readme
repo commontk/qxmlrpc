@@ -1,7 +1,5 @@
 The QXML-RPC library is a full Qt4 based implementation of 
-XML-RPC ( http://www.xmlrpc.com/ ) protocol, 
-licensed under GPLv2 ( If you are interested to use this library in
-project with other licenses, feel free to contact me ).
+XML-RPC ( http://www.xmlrpc.com/ ) protocol, licensed under LGPL.
 
 The library is tested on linux and windows with Qt 4.2.3.
 
