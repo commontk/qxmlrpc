@@ -3,7 +3,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8.2)
 
 PROJECT(qxmlrpc)
 
-OPTION(BUILD_TESTING "Enable testing" OFF)
+INCLUDE(CTest)
+
 OPTION(qxmlrpc_BUILD_EXAMPLES "Build examples" OFF)
 
 
